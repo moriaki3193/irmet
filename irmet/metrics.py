@@ -2,6 +2,7 @@
 import numpy as np
 from functools import reduce
 from operator import add
+from dcg import DCG, nDCG
 
 def AUC(scores):
     """Area Under the Curve
