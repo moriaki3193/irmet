@@ -3,4 +3,8 @@
 irmet - A set of METrics for Information Retrieval.
 """
 
-import metrics
+from .metrics import (
+    AUC,
+    DCG,
+    nDCG
+)
