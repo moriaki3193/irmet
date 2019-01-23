@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 import numpy as np
-from irmet.dcg import DCG, nDCG
+from irmet import DCG, NDCG
 
 
 class TestDcg(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestDcg(unittest.TestCase):
 
     def test_ndcg(self):
         # [START Test of DCG]
-        ndcg = nDCG(self.arr, topk=3)
+        ndcg = NDCG(self.arr, topk=3)
         self.assertEqual(ndcg, 3.5 / (3.5 + (1 / np.log2(3))))
         print("arr = {}".format(self.arr))
         print("nDCG: {}".format(ndcg))

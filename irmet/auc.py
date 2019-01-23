@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 from operator import add
 from functools import reduce

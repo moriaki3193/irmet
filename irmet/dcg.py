@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
+"""A variants of Discounted Cumulative Gain.
+"""
+from typing import Optional, Sequence
 import numpy as np
+from .types import Scalar
 
 
 def _calc_numer(rels):
@@ -54,26 +58,26 @@ def DCG(rels):
     return (numer / denom).sum()
 
 
-def nDCG(rels, topk=None):
-    """Calcurate nDCG based on given relevances of entities.
+def NDCG(rels: Sequence[Scalar], topk: Optional[int] = None) -> Scalar:
+    """Compute NDCG based on given relevances of entities.
 
-    params
-    ------
-    rels :
-        array-like, shape (n, )
-        i-th element represents the relevance score of i-th item.
-    topk :
-        int, k of nDCG@`k`
-        default to None,
-        which means all of the relevance will be considerd.
+    Parameters:
+        rels: array-like, shape (n, )
+              i-th element represents the relevance score of i-th item.
+        topk: int, k for NDCG@`k`. defaults to None.
+              all of the relevance scores will be considerd if k is None.
 
-    return
-    ------
-    ndcg :
-        float, The value of nDCG.
+    Retuls:
+        ndcg: NDCG score
     """
-    opt_rels = np.sort(rels)[::-1]
-    last_idx = -1 if topk is None else topk
-    dcg_obs = DCG(rels[:last_idx])
-    dcg_opt = DCG(opt_rels[:last_idx])
+    obs_rels: Sequence[Scalar]
+    opt_rels: Sequence[Scalar]
+    if topk is None:
+        obs_rels = rels
+        opt_rels = np.sort(rels)[::-1]
+    else:
+        obs_rels = rels[:topk]
+        opt_rels = np.sort(rels)[::-1][:topk]
+    dcg_obs = DCG(obs_rels)
+    dcg_opt = DCG(opt_rels)
     return dcg_obs / dcg_opt
